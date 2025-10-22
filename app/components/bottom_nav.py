@@ -14,7 +14,7 @@ def nav_button(icon: str, label: str, view: str) -> rx.Component:
         on_click=lambda: MemeState.set_active_view(view),
         class_name=rx.cond(
             is_active,
-            "flex flex-col items-center justify-center gap-1 w-20 h-12 text-white bg-white/20 rounded-full transition-all duration-300 scale-110",
+            "flex flex-col items-center justify-center gap-1 w-20 h-12 text-white bg-[#00d4ff]/30 rounded-full transition-all duration-300 scale-110 shadow-[0_0_15px_#00d4ff]",
             "flex flex-col items-center justify-center gap-1 w-16 h-16 text-gray-300 transition-all duration-300",
         ),
     )
@@ -25,5 +25,5 @@ def bottom_nav() -> rx.Component:
         nav_button("home", "Home", "home"),
         nav_button("gallery-vertical-end", "Gallery", "gallery"),
         nav_button("settings", "Settings", "settings"),
-        class_name="fixed bottom-0 left-0 right-0 h-24 bg-black/30 backdrop-blur-xl border-t border-white/10 flex justify-evenly items-center shadow-[0_-4px_20px_rgba(0,0,0,0.2)]",
+        class_name="fixed bottom-0 left-0 right-0 h-24 bg-[#1a2332]/80 backdrop-blur-xl border-t border-white/10 flex justify-evenly items-center shadow-[0_-4px_20px_rgba(0,0,0,0.2)]",
     )

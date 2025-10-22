@@ -5,7 +5,7 @@
 }
 
 .bg-gradient-mesh {
-    background: linear-gradient(-45deg, #8B5CF6, #EC4899, #06B6D4, #F97316);
+    background: linear-gradient(-45deg, #1a2332, #ff6b35, #ffc107, #00d4ff);
     background-size: 400% 400%;
     animation: gradient-animation 15s ease infinite;
 }
@@ -42,19 +42,19 @@
 
 .suggestion-chip {
     @apply text-sm font-bold text-white px-4 py-2 rounded-lg transition-all duration-300 transform;
-    background-color: #F97316; /* Neon Orange */
+    background-color: #ff6b35; /* Vibrant Orange */
     border: 2px solid black;
     box-shadow: 4px 4px 0px black;
 }
 
 .suggestion-chip:hover {
     @apply scale-110;
-    background-color: #FBBF24; /* Laser Yellow */
+    background-color: #ffc107; /* Golden Yellow */
     box-shadow: 6px 6px 0px black;
 }
 
 .fab-button {
-    @apply relative w-24 h-24 bg-gradient-to-br from-pink-500 to-orange-500 text-white rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 transform active:scale-95;
+    @apply relative w-24 h-24 bg-gradient-to-br from-[#ff6b35] to-[#ffc107] text-white rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 transform active:scale-95;
     border: 4px solid black;
     animation: pulse-glow 2s infinite;
 }
@@ -64,9 +64,9 @@
 }
 
 @keyframes pulse-glow {
-    0% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7), 8px 8px 0px black; }
-    70% { box-shadow: 0 0 10px 20px rgba(236, 72, 153, 0), 8px 8px 0px black; }
-    100% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0), 8px 8px 0px black; }
+    0% { box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.7), 8px 8px 0px black; }
+    70% { box-shadow: 0 0 10px 20px rgba(255, 107, 53, 0), 8px 8px 0px black; }
+    100% { box-shadow: 0 0 0 0 rgba(255, 107, 53, 0), 8px 8px 0px black; }
 }
 
 .boom-effect {

@@ -23,5 +23,5 @@ def image_preview() -> rx.Component:
         ),
         meme_text_overlay(MemeState.top_text, "top-0"),
         meme_text_overlay(MemeState.bottom_text, "bottom-0"),
-        class_name="relative w-full max-w-md aspect-square bg-gray-900 overflow-hidden font-['Bangers'] comic-panel",
+        class_name="relative w-full max-w-md aspect-square bg-gray-900 overflow-hidden font-['Bangers'] comic-panel hover:shadow-[0_0_20px_#00d4ff]",
     )

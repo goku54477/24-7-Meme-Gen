@@ -28,7 +28,7 @@ def meme_actions() -> rx.Component:
             (
                 True,
                 rx.el.div(
-                    rx.spinner(class_name="text-pink-500", size="3"),
+                    rx.spinner(class_name="text-[#ff6b35]", size="3"),
                     rx.el.p(
                         "BLASTING MEMES...",
                         class_name="text-gray-600 font-bold text-lg mt-2 font-['Bangers'] tracking-wider",
@@ -39,15 +39,15 @@ def meme_actions() -> rx.Component:
             rx.cond(
                 MemeState.is_error,
                 rx.el.div(
-                    rx.icon("bomb", size=64, class_name="text-red-500"),
+                    rx.icon("bomb", size=64, class_name="text-[#ff5252]"),
                     rx.el.p(
                         "MEME-POCALYPSE!",
-                        class_name="text-red-500 font-black text-3xl mt-4 font-['Bangers']",
+                        class_name="text-[#ff5252] font-black text-3xl mt-4 font-['Bangers']",
                     ),
                     rx.el.button(
                         "TRY AGAIN!",
                         on_click=MemeState.generate_gemini_suggestions,
-                        class_name="mt-6 bg-orange-500 text-white px-6 py-3 rounded-full hover:bg-orange-600 font-bold text-lg font-['Bangers'] tracking-widest",
+                        class_name="mt-6 bg-[#ff6b35] text-white px-6 py-3 rounded-full hover:bg-[#ffc107] font-bold text-lg font-['Bangers'] tracking-widest",
                     ),
                     class_name="flex flex-col items-center gap-2 p-8",
                 ),
@@ -66,10 +66,13 @@ def meme_actions() -> rx.Component:
         ),
         rx.el.div(
             action_button(
-                "pencil", "EDIT", MemeState.toggle_text_dialog, "bg-cyan-400 text-black"
+                "pencil",
+                "EDIT",
+                MemeState.toggle_text_dialog,
+                "bg-[#00d4ff] text-black",
             ),
             action_button(
-                "download", "SAVE", MemeState.download_meme, "bg-pink-500 text-white"
+                "download", "SAVE", MemeState.download_meme, "bg-[#ff5252] text-white"
             ),
             class_name="flex justify-center gap-4 mt-6",
         ),

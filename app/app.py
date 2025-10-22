@@ -37,16 +37,16 @@ def home_view() -> rx.Component:
             ),
             rx.el.div(
                 rx.el.div(
-                    rx.icon("image-plus", class_name="size-12 text-gray-400"),
+                    rx.icon("image-plus", class_name="size-12 text-[#ff6b35]"),
                     rx.el.h2(
                         "UPLOAD AN IMAGE!",
-                        class_name="text-2xl font-black text-gray-700 mt-6 tracking-tighter font-['Bangers']",
+                        class_name="text-2xl font-black text-gray-800 mt-6 tracking-tighter font-['Bangers']",
                     ),
                     rx.el.p(
                         "Tap the 'BOOM' button to start memeing!",
-                        class_name="text-gray-500 mt-1 text-md font-semibold",
+                        class_name="text-gray-600 mt-1 text-md font-semibold",
                     ),
-                    class_name="flex flex-col items-center justify-center text-center p-8 bg-white/50 backdrop-blur-lg border border-white/20 rounded-3xl shadow-lg",
+                    class_name="flex flex-col items-center justify-center text-center p-8 bg-[#f5e6d3]/50 backdrop-blur-lg border border-white/20 rounded-3xl shadow-lg",
                 ),
                 class_name="flex flex-col items-center justify-center text-center h-full p-4",
             ),
