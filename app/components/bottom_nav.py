@@ -2,59 +2,28 @@ import reflex as rx
 from app.state import MemeState
 
 
-def nav_button(
-    icon: str, label: str, emoji: str, is_active: bool, on_click: rx.event.EventType
-) -> rx.Component:
-    """A single navigation button for the bottom bar."""
+def nav_button(icon: str, label: str, view: str) -> rx.Component:
+    is_active = MemeState.active_view == view
     return rx.el.button(
-        rx.el.div(
-            rx.icon(
-                icon,
-                size=28,
-                class_name=rx.cond(is_active, "text-orange-900", "text-gray-600"),
-            ),
-            class_name=rx.cond(
-                is_active,
-                "bg-orange-300 rounded-full p-3 transition-all duration-300 transform scale-110",
-                "p-3",
-            ),
+        rx.icon(icon, class_name="size-7 transition-all duration-300"),
+        rx.cond(
+            is_active,
+            rx.el.span(label, class_name="text-[10px] font-bold"),
+            rx.el.span(class_name="text-[10px]"),
         ),
-        rx.el.span(
-            f"{label} {emoji}",
-            class_name=rx.cond(
-                is_active,
-                "text-orange-900 font-bold text-sm",
-                "text-gray-700 text-sm font-medium",
-            ),
+        on_click=lambda: MemeState.set_active_view(view),
+        class_name=rx.cond(
+            is_active,
+            "flex flex-col items-center justify-center gap-1 w-20 h-12 text-white bg-white/20 rounded-full transition-all duration-300 scale-110",
+            "flex flex-col items-center justify-center gap-1 w-16 h-16 text-gray-300 transition-all duration-300",
         ),
-        on_click=on_click,
-        class_name="flex flex-col items-center justify-center gap-1 w-full h-full transition-all duration-300 focus:outline-none",
     )
 
 
 def bottom_nav() -> rx.Component:
-    """The bottom navigation bar for the app."""
     return rx.el.div(
-        nav_button(
-            "home",
-            "Home",
-            "🏠",
-            MemeState.active_view == "home",
-            lambda: MemeState.set_active_view("home"),
-        ),
-        nav_button(
-            "gallery-vertical-end",
-            "Gallery",
-            "✨",
-            MemeState.active_view == "gallery",
-            lambda: MemeState.set_active_view("gallery"),
-        ),
-        nav_button(
-            "settings",
-            "Settings",
-            "⚙️",
-            MemeState.active_view == "settings",
-            lambda: MemeState.set_active_view("settings"),
-        ),
-        class_name="fixed bottom-0 left-0 right-0 h-24 bg-gray-100 flex justify-around items-center border-t-2 border-gray-200 shadow-[0_-2px_10px_rgba(0,0,0,0.08)]",
+        nav_button("home", "Home", "home"),
+        nav_button("gallery-vertical-end", "Gallery", "gallery"),
+        nav_button("settings", "Settings", "settings"),
+        class_name="fixed bottom-0 left-0 right-0 h-24 bg-black/30 backdrop-blur-xl border-t border-white/10 flex justify-evenly items-center shadow-[0_-4px_20px_rgba(0,0,0,0.2)]",
     )

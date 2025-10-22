@@ -65,7 +65,7 @@ class MemeState(rx.State):
             with image_path.open("rb") as f:
                 image_bytes = f.read()
             image_part = types.Part.from_data(data=image_bytes, mime_type="image/jpeg")
-            prompt = "You are a meme caption generator. Analyze this image and suggest 4 funny, short meme captions (each under 15 words). Return them as a JSON array of strings with no other text or markdown."
+            prompt = "You are a meme caption generator. Analyze this image and suggest 4 funny, short meme captions. Each caption must have a TOP and an optional BOTTOM text, separated by a pipe character '|'. Example: 'TOP TEXT | BOTTOM TEXT' or just 'TOP TEXT'. Keep captions concise (under 10 words per line). Return a JSON array of 4 strings with no other text or markdown."
             contents = [image_part, prompt]
             response = await client.generate_content_async(contents)
             response_text = response.text.strip()
@@ -111,9 +111,10 @@ class MemeState(rx.State):
     @rx.event
     def select_suggestion(self, text: str):
         """Select a meme text suggestion and apply it."""
+        parts = text.split("|")
         self.selected_meme_text = text
-        self.top_text = text
-        self.bottom_text = ""
+        self.top_text = parts[0].strip()
+        self.bottom_text = parts[1].strip() if len(parts) > 1 else ""
 
     @rx.event
     def toggle_text_dialog(self):
@@ -141,11 +142,36 @@ class MemeState(rx.State):
         self, draw, text, position, font, text_color="white", stroke_color="black"
     ):
         x, y = position
-        draw.text((x - 2, y - 2), text, font=font, fill=stroke_color)
-        draw.text((x + 2, y - 2), text, font=font, fill=stroke_color)
-        draw.text((x + 2, y + 2), text, font=font, fill=stroke_color)
-        draw.text((x - 2, y + 2), text, font=font, fill=stroke_color)
-        draw.text((x, y), text, font=font, fill=text_color)
+        stroke_width = 3
+        draw.text(
+            (x - stroke_width, y - stroke_width),
+            text,
+            font=font,
+            fill=stroke_color,
+            align="center",
+        )
+        draw.text(
+            (x + stroke_width, y - stroke_width),
+            text,
+            font=font,
+            fill=stroke_color,
+            align="center",
+        )
+        draw.text(
+            (x + stroke_width, y + stroke_width),
+            text,
+            font=font,
+            fill=stroke_color,
+            align="center",
+        )
+        draw.text(
+            (x - stroke_width, y + stroke_width),
+            text,
+            font=font,
+            fill=stroke_color,
+            align="center",
+        )
+        draw.text((x, y), text, font=font, fill=text_color, align="center")
 
     @rx.event(background=True)
     async def download_meme(self):
@@ -162,12 +188,10 @@ class MemeState(rx.State):
                 txt_layer = Image.new("RGBA", base_image.size, (255, 255, 255, 0))
                 draw = ImageDraw.Draw(txt_layer)
                 try:
-                    font_path = (
-                        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf"
-                    )
+                    font_path = "assets/Bangers-Regular.ttf"
                     if not os.path.exists(font_path):
                         font_path = "arial.ttf"
-                    font_size = int(base_image.width / 10)
+                    font_size = int(base_image.width / 9)
                     font = ImageFont.truetype(font_path, font_size)
                 except IOError as e:
                     logging.exception(f"Error loading font: {e}")
