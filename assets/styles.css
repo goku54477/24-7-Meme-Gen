@@ -89,3 +89,10 @@
 #app {
     font-family: 'Inter', sans-serif;
 }
+
+/* Hide Reflex badge */
+[class*="reflex-badge"],
+[class*="rx-badge"],
+a[href*="reflex.dev"] {
+    display: none !important;
+}
