@@ -85,19 +85,33 @@ def index() -> rx.Component:
             text_edit_dialog(),
             class_name="relative flex flex-col min-h-screen w-full bg-gray-50 items-center",
         ),
-        class_name="font-['Inter']",
+        class_name="font-['Inter'] select-none",
+        id="app",
     )
 
 
 app = rx.App(
     theme=rx.theme(appearance="light"),
     head_components=[
+        rx.el.meta(charset="UTF-8"),
+        rx.el.meta(
+            name="viewport",
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
+        ),
+        rx.el.meta(name="theme-color", content="#f97316"),
+        rx.el.meta(
+            name="description", content="AI-powered meme generator for mobile devices"
+        ),
         rx.el.link(rel="preconnect", href="https://fonts.googleapis.com"),
         rx.el.link(rel="preconnect", href="https://fonts.gstatic.com", cross_origin=""),
         rx.el.link(
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap",
             rel="stylesheet",
         ),
+        rx.el.link(rel="manifest", href="/manifest.json"),
+        rx.el.meta(name="mobile-web-app-capable", content="yes"),
+        rx.el.meta(name="apple-mobile-web-app-capable", content="yes"),
+        rx.el.meta(name="apple-mobile-web-app-status-bar-style", content="default"),
     ],
 )
 app.add_page(index, route="/")
