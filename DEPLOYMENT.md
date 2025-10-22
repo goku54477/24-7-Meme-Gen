@@ -33,9 +33,9 @@ This handles both frontend and backend deployment automatically with:
 - Less control over infrastructure
 - May have usage limits on free tier
 
-### Option 2: Split Deployment (Vercel + Backend Host)
+### Option 2: Vercel Frontend + Separate Backend (Advanced)
 
-If you want to deploy the frontend to Vercel and backend separately:
+If you want to deploy the frontend to Vercel and backend separately, follow these steps:
 
 #### Step 1: Export Frontend
 ```bash
@@ -45,43 +45,192 @@ reflex export --frontend-only
 
 This creates a `frontend.zip` file containing the static Next.js build.
 
-#### Step 2: Prepare for Vercel
+#### Step 2: Prepare Vercel Deployment
+
+**Extract and organize files:**
 ```bash
-# Extract the frontend files
-unzip frontend.zip -d vercel-frontend
-cd vercel-frontend
+# Create a deployment directory
+mkdir vercel-deploy
+cd vercel-deploy
+
+# Extract frontend
+unzip ../frontend.zip
+
+# The structure should now have:
+# - .next/ (Next.js build)
+# - public/ (static assets)
+# - package.json
+# - Other Next.js files
 ```
 
-#### Step 3: Deploy to Vercel
+**Create or update `package.json`:**
+If not present, create a minimal `package.json`:
+```json
+{
+  "name": "meme-blaster-frontend",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
+```
 
-**Using Vercel CLI:**
+#### Step 3: Configure Vercel
+
+**Create `vercel.json` in your deployment directory:**
+```json
+{
+  "version": 2,
+  "buildCommand": "echo 'Build already complete'",
+  "framework": "nextjs",
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "https://your-backend-url.com/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ]
+}
+```
+
+**Important:** Replace `https://your-backend-url.com` with your actual backend URL.
+
+#### Step 4: Deploy to Vercel
+
+**Method A: Using Vercel CLI (Recommended)**
 ```bash
 # Install Vercel CLI if not already installed
 npm i -g vercel
 
-# Deploy
-vercel
+# Login to Vercel
+vercel login
+
+# Deploy (from the vercel-deploy directory)
+vercel --prod
 ```
 
-**Using Git Integration:**
-1. Push the extracted frontend files to a Git repository
-2. Connect the repository in the Vercel dashboard
-3. Vercel will auto-detect and deploy
+**Method B: Git Integration**
+1. Initialize git in the `vercel-deploy` directory:
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial Vercel deployment"
+   ```
+2. Push to GitHub/GitLab/Bitbucket:
+   ```bash
+   git remote add origin <your-repo-url>
+   git push -u origin main
+   ```
+3. Go to [Vercel Dashboard](https://vercel.com/dashboard)
+4. Click "Import Project"
+5. Select your repository
+6. Vercel will auto-detect Next.js and configure the build
 
-#### Step 4: Deploy Backend Separately
-The backend requires:
-- Python 3.10+
-- Google API key for Gemini AI
-- Environment variable: `GOOGLE_API_KEY`
+**Configure Environment Variables in Vercel:**
+1. Go to Project Settings > Environment Variables
+2. Add `NEXT_PUBLIC_API_URL` with your backend URL
+3. Redeploy if necessary
 
-Recommended backend hosting platforms:
-- Render
-- Railway
-- Fly.io
-- Any Python-compatible cloud provider
+#### Step 5: Deploy Backend Separately
 
-#### Step 5: Connect Frontend to Backend
-After deploying backend, update the frontend's API URL configuration to point to your backend URL.
+The backend requires a Python-compatible hosting platform. Here are the recommended options:
+
+**Option A: Render**
+1. Create a new Web Service on [Render](https://render.com)
+2. Connect your Git repository
+3. Set build command: `pip install -r requirements.txt`
+4. Set start command: `reflex run --env prod` or `gunicorn`
+5. Add environment variable: `GOOGLE_API_KEY`
+
+**Option B: Railway**
+1. Create a new project on [Railway](https://railway.app)
+2. Connect your Git repository
+3. Railway will auto-detect Python
+4. Add environment variable: `GOOGLE_API_KEY`
+5. Deploy
+
+**Option C: Fly.io**
+Create a `fly.toml`:
+```toml
+app = "meme-blaster-backend"
+
+[build]
+  [build.env]
+    PYTHON_VERSION = "3.11"
+
+[env]
+  PORT = "8000"
+
+[[services]]
+  http_checks = []
+  internal_port = 8000
+  processes = ["app"]
+  protocol = "tcp"
+  
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+  
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
+```
+
+Deploy with:
+```bash
+fly launch
+fly secrets set GOOGLE_API_KEY=your-key-here
+fly deploy
+```
+
+#### Step 6: Update Frontend Configuration
+
+After deploying the backend, update your Vercel project:
+
+1. In Vercel Dashboard, go to your project
+2. Settings > Environment Variables
+3. Update or add: `NEXT_PUBLIC_API_URL=https://your-backend-url.com`
+4. Redeploy your frontend
+
+**Update `vercel.json` routes:**
+```json
+{
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "https://your-actual-backend-url.com/api/$1"
+    }
+  ]
+}
+```
+
+Commit and push to trigger redeployment.
+
+#### Step 7: Configure CORS on Backend
+
+Ensure your backend accepts requests from your Vercel domain. In your backend code, configure CORS:
+
+```python
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://your-vercel-domain.vercel.app"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+```
 
 ## Environment Variables Required
 
