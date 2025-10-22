@@ -5,9 +5,9 @@ def header() -> rx.Component:
     """The main header for the app."""
     return rx.el.header(
         rx.el.div(
-            rx.icon("bot-message-square", class_name="text-white", size=40),
+            rx.image(src="/favicon.ico", class_name="w-12 h-12"),
             rx.el.h1(
-                "MEME GENERATOR 🔥",
+                "MEME GENERATOR \ud83d\udd25",
                 class_name="text-3xl font-extrabold text-white tracking-tighter",
                 style={"textShadow": "2px 2px 4px rgba(0,0,0,0.3)"},
             ),
