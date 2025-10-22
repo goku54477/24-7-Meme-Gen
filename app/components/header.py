@@ -5,12 +5,13 @@ def header() -> rx.Component:
     """The main header for the app."""
     return rx.el.header(
         rx.el.div(
-            rx.icon("bot-message-square", class_name="text-orange-500", size=32),
+            rx.icon("bot-message-square", class_name="text-white", size=40),
             rx.el.h1(
-                "AI Meme Gen",
-                class_name="text-2xl font-bold text-gray-800 tracking-tighter",
+                "MEME GENERATOR 🔥",
+                class_name="text-3xl font-extrabold text-white tracking-tighter",
+                style={"textShadow": "2px 2px 4px rgba(0,0,0,0.3)"},
             ),
-            class_name="flex items-center gap-3",
+            class_name="flex items-center gap-4",
         ),
-        class_name="fixed top-0 left-0 right-0 z-10 flex items-center justify-between px-4 h-16 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm",
+        class_name="fixed top-0 left-0 right-0 z-10 flex items-center justify-center px-4 h-20 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 shadow-lg",
     )
