@@ -112,6 +112,7 @@ app = rx.App(
         rx.el.meta(name="mobile-web-app-capable", content="yes"),
         rx.el.meta(name="apple-mobile-web-app-capable", content="yes"),
         rx.el.meta(name="apple-mobile-web-app-status-bar-style", content="default"),
+        rx.el.script(src="/sw.js"),
     ],
 )
 app.add_page(index, route="/")
