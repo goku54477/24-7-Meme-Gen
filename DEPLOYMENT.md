@@ -232,13 +232,27 @@ app.add_middleware(
 )
 ```
 
+## Quick Vercel Deployment Checklist
+
+For the simplest Vercel deployment:
+
+1. ✅ Export frontend: `reflex export --frontend-only`
+2. ✅ Extract files: `unzip frontend.zip -d vercel-deploy`
+3. ✅ Deploy backend to Render/Railway/Fly.io
+4. ✅ Get backend URL (e.g., `https://meme-blaster.onrender.com`)
+5. ✅ Update `vercel.json` with backend URL
+6. ✅ Deploy to Vercel: `vercel --prod`
+7. ✅ Add environment variable `GOOGLE_API_KEY` to backend
+8. ✅ Test the application
+
 ## Environment Variables Required
 
 ### Backend
-- `GOOGLE_API_KEY`: Your Google Gemini API key
+- `GOOGLE_API_KEY`: Your Google Gemini API key ([Get one here](https://aistudio.google.com/apikey))
 
 ### Frontend (if split deployment)
 - `NEXT_PUBLIC_API_URL`: Backend API URL (if deploying separately)
+  - Example: `https://meme-blaster-backend.onrender.com`
 
 ## Features
 
