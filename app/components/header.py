@@ -4,7 +4,7 @@ import reflex as rx
 def header() -> rx.Component:
     return rx.el.header(
         rx.el.div(
-            rx.image(src="placeholder.svg", class_name="size-16"),
+            rx.image(src="logo.jpg", class_name="size-16 rounded-full object-cover border-2 border-black shadow-lg"),
             rx.el.h1(
                 "MEME BLASTER",
                 class_name="text-4xl font-black text-white tracking-tighter font-['Bangers'] action-lines",
