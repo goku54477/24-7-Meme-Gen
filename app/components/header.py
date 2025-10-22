@@ -7,9 +7,12 @@ def header() -> rx.Component:
             rx.image(src="logo.jpg", class_name="size-16 rounded-full object-cover border-2 border-black shadow-lg"),
             rx.el.h1(
                 "MEME BLASTER",
-                class_name="text-4xl font-black text-white tracking-tighter font-['Bangers'] action-lines",
+                class_name="text-5xl font-black tracking-tight font-['Bangers'] action-lines",
                 style={
-                    "textShadow": "3px 3px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000, 1px 1px 0px #000"
+                    "color": "#FFE600",
+                    "textShadow": "4px 4px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000, 2px 2px 0px #000, 6px 6px 0px rgba(0,0,0,0.3)",
+                    "WebkitTextStroke": "2px #000",
+                    "paintOrder": "stroke fill"
                 },
             ),
             class_name="flex items-center justify-center gap-3",
