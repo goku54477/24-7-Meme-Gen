@@ -10,14 +10,28 @@ MEME BLASTER is built with Reflex, a Python full-stack framework. The applicatio
 
 ## Deployment Options
 
-### Option 1: Reflex Cloud (Recommended)
-The easiest way to deploy is using Reflex's built-in hosting:
+### Option 1: Reflex Cloud (Recommended - Full Stack)
+The easiest way to deploy the complete application is using Reflex's built-in hosting:
 
 ```bash
 reflex deploy
 ```
 
-This handles both frontend and backend deployment automatically.
+This handles both frontend and backend deployment automatically with:
+- Automatic SSL certificates
+- Global CDN
+- Serverless backend
+- One-click deployment
+
+**Pros:**
+- Simplest deployment method
+- Handles both frontend and backend
+- No separate configuration needed
+- Built-in scaling and monitoring
+
+**Cons:**
+- Less control over infrastructure
+- May have usage limits on free tier
 
 ### Option 2: Split Deployment (Vercel + Backend Host)
 
