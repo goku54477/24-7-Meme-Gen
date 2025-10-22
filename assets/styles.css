@@ -93,6 +93,12 @@
 /* Hide Reflex badge */
 [class*="reflex-badge"],
 [class*="rx-badge"],
-a[href*="reflex.dev"] {
+a[href*="reflex.dev"],
+a[target="_blank"][rel*="noopener"] {
+    display: none !important;
+}
+
+/* Additional badge hiding */
+a[href*="reflex"] {
     display: none !important;
 }
