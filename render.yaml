@@ -1,0 +1,20 @@
+# Render Blueprint for MEME BLASTER Backend
+# This file enables one-click deployment to Render
+
+services:
+  - type: web
+    name: meme-blaster-backend
+    runtime: python
+    region: oregon
+    plan: free
+    branch: main
+    buildCommand: pip install -r requirements.txt && reflex init
+    startCommand: reflex run --env prod --backend-only --backend-port 8000
+    envVars:
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: PYTHON_VERSION
+        value: '3.11'
+      - key: PORT
+        value: '8000'
+    healthCheckPath: /
