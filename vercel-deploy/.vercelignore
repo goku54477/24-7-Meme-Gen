@@ -1,0 +1,21 @@
+# Vercel Ignore File
+# Files and directories to ignore during deployment
+
+# Python
+*.pyc
+__pycache__/
+*.py
+
+# Reflex
+.web/
+rxconfig.py
+
+# Development
+.git/
+.github/
+*.log
+.env.local
+
+# Documentation (optional - remove if you want docs on Vercel)
+README.md
+DEPLOY.sh
